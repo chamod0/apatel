@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <!-- Enhanced SEO Meta Tags -->
+      <meta
+        name="description"
+        content="Shop premium handmade wool crafts at Apetal. Discover our collection of sustainable, natural wool scarves, blankets, and accessories. Ethically sourced materials, artisan crafted. Free shipping available."
+      />
+      <meta
+        name="keywords"
+        content="wool crafts, handmade scarves, wool blankets, sustainable wool, artisan crafts, natural wool products"
+      />
+      <meta name="author" content="Apetal Crafts" />
+      <meta
+        property="og:title"
+        content="Apetal | Premium Handmade Wool Crafts"
+      />
+      <meta
+        property="og:description"
+        content="Discover handcrafted wool products made with sustainable materials and traditional techniques. Shop our collection of scarves, blankets, and accessories."
+      />
+      <meta property="og:image" content="assets/img/apetal-social.jpg" />
+      <meta property="og:url" content="https://apetal.com" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <title>
+        Apetal | Premium Handmade Wool Crafts | Sustainable Natural Products
+      </title>
+
+      <!-- Canonical URL for SEO -->
+      <link rel="canonical" href="https://apetal.com" />
+
+      <!-- Preload Critical Resources -->
+      <link rel="preload" href="assets/img/apetal-logo.png" as="image" />
+      <link rel="preload" href="assets/video/wool-crafting.mp4" as="video" />
+
+      <!-- External Resources -->
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+      />
+
+      <!-- Link to External CSS File -->
+      <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+      <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+      </div>
+      <header>
+        <nav class="navbar">
+          <a href="#" class="logo">
+            <img src="assets/img/apetal-logo.png" alt="Apetal Logo" />
+          </a>
+          <div>
+            <a href="#products" class="btn btn-primary">Shop Now</a>
+            <a href="#contact" class="btn btn-primary">Contact Us</a>
+          </div>
+        </nav>
+      </header>
+
+      <div class="shop-container">
+        <div class="filters-section">
+          <div class="search-bar">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search products..."
+            />
+          </div>
+          <div class="filter-options">
+            <div class="filter-group">
+              <select id="categoryFilter">
+                <option value="">All Categories</option>
+                <option value="scarves">Scarves</option>
+                <option value="blankets">Blankets</option>
+                <option value="accessories">Accessories</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <select id="priceFilter">
+                <option value="">All Prices</option>
+                <option value="0-50">$0 - $50</option>
+                <option value="51-100">$51 - $100</option>
+                <option value="101+">$101+</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <select id="sortBy">
+                <option value="default">Sort By</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="name-asc">Name: A to Z</option>
+                <option value="name-desc">Name: Z to A</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="products-grid" id="productsGrid"></div>
+      </div>
+
+      <!-- Popup HTML -->
+      <div class="popup-overlay">
+        <div class="popup-content">
+          <button class="popup-close">&times;</button>
+          <div class="popup-image"></div>
+          <div class="popup-details">
+            <h2></h2>
+            <p class="popup-price"></p>
+            <p class="popup-description"></p>
+            <div class="popup-options">
+              <select class="color-select">
+                <option value="natural">Natural</option>
+                <option value="gray">Gray</option>
+                <option value="brown">Brown</option>
+              </select>
+              <select class="size-select">
+                <option value="s">Small</option>
+                <option value="m">Medium</option>
+                <option value="l">Large</option>
+              </select>
+            </div>
+            <button class="btn btn-primary">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          let products = [];
+          let filteredProducts = [];
+
+          // Close popup function
+          const closePopup = () => {
+            const popup = document.querySelector(".popup-overlay");
+            popup.classList.remove("active");
+            document.body.style.overflow = "auto";
+          };
+
+          // Add popup event listeners
+          document
+            .querySelector(".popup-close")
+            .addEventListener("click", closePopup);
+          document
+            .querySelector(".popup-overlay")
+            .addEventListener("click", (event) => {
+              if (event.target === document.querySelector(".popup-overlay")) {
+                closePopup();
+              }
+            });
+
+          // Fetch products
+          fetch("products.json")
+            .then((response) => response.json())
+            .then((data) => {
+              products = data;
+              filteredProducts = [...products];
+              renderProducts();
+              setupEventListeners();
+            });
+
+          function setupEventListeners() {
+            document
+              .getElementById("searchInput")
+              .addEventListener("input", filterProducts);
+            document
+              .getElementById("categoryFilter")
+              .addEventListener("change", filterProducts);
+            document
+              .getElementById("priceFilter")
+              .addEventListener("change", filterProducts);
+            document
+              .getElementById("sortBy")
+              .addEventListener("change", filterProducts);
+          }
+
+          function filterProducts() {
+            const searchTerm = document
+              .getElementById("searchInput")
+              .value.toLowerCase();
+            const category = document.getElementById("categoryFilter").value;
+            const priceRange = document.getElementById("priceFilter").value;
+            const sortBy = document.getElementById("sortBy").value;
+
+            filteredProducts = products.filter((product) => {
+              const matchesSearch =
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm);
+              const matchesCategory =
+                !category || product.category === category;
+              const matchesPrice = matchesPriceRange(product.price, priceRange);
+
+              return matchesSearch && matchesCategory && matchesPrice;
+            });
+
+            sortProducts(sortBy);
+            renderProducts();
+          }
+
+          function matchesPriceRange(price, range) {
+            if (!range) return true;
+            const numericPrice = parseFloat(price.replace(/[^0-9.-]+/g, ""));
+            switch (range) {
+              case "0-50":
+                return numericPrice <= 50;
+              case "51-100":
+                return numericPrice > 50 && numericPrice <= 100;
+              case "101+":
+                return numericPrice > 100;
+              default:
+                return true;
+            }
+          }
+
+          function sortProducts(sortBy) {
+            switch (sortBy) {
+              case "price-asc":
+                filteredProducts.sort((a, b) => getPrice(a) - getPrice(b));
+                break;
+              case "price-desc":
+                filteredProducts.sort((a, b) => getPrice(b) - getPrice(a));
+                break;
+              case "name-asc":
+                filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+              case "name-desc":
+                filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            }
+          }
+
+          function getPrice(product) {
+            return parseFloat(product.price.replace(/[^0-9.-]+/g, ""));
+          }
+
+          function renderProducts() {
+            const productsGrid = document.getElementById("productsGrid");
+            productsGrid.innerHTML = "";
+
+            if (filteredProducts.length === 0) {
+              productsGrid.innerHTML = `
+                        <div class="no-results">
+                            <h3>No products found</h3>
+                            <p>Try adjusting your filters or search terms</p>
+                        </div>
+                    `;
+              return;
+            }
+
+            filteredProducts.forEach((product) => {
+              const productCard = document.createElement("div");
+              productCard.classList.add("product-card");
+              productCard.innerHTML = `
+                        <div class="product-image" style="background-image: url('${product.image}')"></div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="product-price">${product.price}</p>
+                            <p>${product.description}</p>
+                            <button class="btn btn-primary">View Details</button>
+                        </div>
+                    `;
+              productCard.addEventListener("click", () =>
+                showProductPopup(product)
+              );
+              productsGrid.appendChild(productCard);
+            });
+          }
+
+          function showProductPopup(product) {
+            const popup = document.querySelector(".popup-overlay");
+            popup.querySelector(
+              ".popup-image"
+            ).style.backgroundImage = `url('${product.image}')`;
+            popup.querySelector("h2").textContent = product.name;
+            popup.querySelector(".popup-price").textContent = product.price;
+            popup.querySelector(".popup-description").textContent =
+              product.description;
+            popup.classList.add("active");
+            document.body.style.overflow = "hidden";
+          }
+        });
+
+        // Fade out loading overlay
+        window.addEventListener("load", () => {
+          const loader = document.querySelector(".loading-overlay");
+          loader.style.opacity = "0";
+          setTimeout(() => (loader.style.display = "none"), 500);
+        });
+      </script>
+    </body>
+  </html>
+</html>

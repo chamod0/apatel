@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Enhanced SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Shop premium handmade wool crafts at Apetal. Discover our collection of sustainable, natural wool scarves, blankets, and accessories. Ethically sourced materials, artisan crafted. Free shipping available."
+    />
+    <meta
+      name="keywords"
+      content="wool crafts, handmade scarves, wool blankets, sustainable wool, artisan crafts, natural wool products"
+    />
+    <meta name="author" content="Apetal Crafts" />
+    <meta property="og:title" content="Apetal | Premium Handmade Wool Crafts" />
+    <meta
+      property="og:description"
+      content="Discover handcrafted wool products made with sustainable materials and traditional techniques. Shop our collection of scarves, blankets, and accessories."
+    />
+    <meta property="og:image" content="assets/img/apetal-social.jpg" />
+    <meta property="og:url" content="https://apetal.com" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>
+      Apetal | Premium Handmade Wool Crafts | Sustainable Natural Products
+    </title>
+
+    <!-- Canonical URL for SEO -->
+    <link rel="canonical" href="https://apetal.com" />
+
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="assets/img/apetal-logo.png" as="image" />
+    <link rel="preload" href="assets/video/wool-crafting.mp4" as="video" />
+
+    <!-- External Resources -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <!-- Link to External CSS File -->
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+    <header>
+      <nav class="navbar">
+        <a href="#" class="logo">
+          <img src="assets/img/apetal-logo.png" alt="Apetal Logo" />
+        </a>
+        <div>
+          <a href="shop.html" class="btn btn-primary">Shop Now</a>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="assets/video/wool-crafting.mp4" type="video/mp4" />
+        <source src="assets/video/wool-crafting.webm" type="video/webm" />
+        Your browser does not support the video tag.
+      </video>
+      <div class="hero-overlay"></div>
+      <button class="video-control" aria-label="Toggle video play/pause">
+        <i class="fas fa-pause"></i>
+      </button>
+      <div class="hero-content">
+        <h1>Handmade Wool Creations</h1>
+        <p>Sustainable, Handcrafted , and Beautiful</p>
+        <a href="#products" class="btn btn-primary">Explore Collection</a>
+      </div>
+    </section>
+
+    <section id="products" class="products">
+      <div class="container">
+        <h2 class="section-title">Our Collection</h2>
+        <div class="products-grid">
+          <div class="products-grid"></div>
+        </div>
+      </div>
+    </section>
+    <!-- <section class="statistics" id="statistics">
+      <div class="parallax-bg"></div>
+      <div class="container">
+        <div class="statistics-grid">
+          <div class="stat-card" data-value="5000">
+            <h3 class="stat-number">0+</h3>
+            <p class="stat-label">Happy Customers</p>
+            <div class="stat-progress">
+              <div class="progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="stat-card" data-value="150000">
+            <h3 class="stat-number">$0</h3>
+            <p class="stat-label">Total Sales</p>
+            <div class="stat-progress">
+              <div class="progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="stat-card" data-value="25">
+            <h3 class="stat-number">0+</h3>
+            <p class="stat-label">Products Available</p>
+            <div class="stat-progress">
+              <div class="progress-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2 class="section-title">Contact Us</h2>
+        <form
+          action="mailto:threadfulknoys@gmail.com"
+          method="post"
+          enctype="text/plain"
+          class="contact-form"
+          id="contact_form"
+        >
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Your Name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Your Message"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+          <div>
+            <input class="btn btn-primary" type="submit" value="Submit" />
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <div class="popup-overlay">
+      <div class="popup-content">
+        <button class="popup-close">&times;</button>
+        <div class="popup-image"></div>
+        <div class="popup-details">
+          <h2></h2>
+          <p class="popup-price"></p>
+          <p class="popup-description"></p>
+          <div class="popup-options">
+            <select class="color-select">
+              <option value="natural">Natural</option>
+              <option value="gray">Gray</option>
+              <option value="brown">Brown</option>
+            </select>
+            <select class="size-select">
+              <option value="s">Small</option>
+              <option value="m">Medium</option>
+              <option value="l">Large</option>
+            </select>
+          </div>
+          <button class="btn btn-primary">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <p>&copy; 2024 Apetal. All rights reserved.</p>
+        <p>
+          Follow us:
+          <a href="https://www.facebook.com/Apatelwool" aria-label="facebook"
+            ><i class="fab fa-facebook"></i
+          ></a>
+        </p>
+        <p>
+          Call us:
+          <a href="#" aria-label="CAll"
+            >071 710 0822<i class="fab fa-call"></i
+          ></a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Fetch products JSON
+        fetch("products.json")
+          .then((response) => response.json())
+          .then((products) => {
+            const productsGrid = document.querySelector(".products-grid");
+            productsGrid.innerHTML = ""; // Clear existing products
+
+            products.forEach((product) => {
+              const productCard = document.createElement("div");
+              productCard.classList.add("product-card");
+              productCard.dataset.productId = product.id;
+              productCard.innerHTML = `
+          <div class="product-image" style="background-image: url('${product.image}')"></div>
+          <div class="product-info">
+            <h3>${product.name}</h3>
+            <p class="product-price">${product.price}</p>
+            <p>${product.description}</p>
+            <button class="btn btn-primary">View Details</button>
+          </div>
+        `;
+              productsGrid.appendChild(productCard);
+
+              // Attach click event for popup
+              productCard.addEventListener("click", () =>
+                showProductPopup(product)
+              );
+            });
+          });
+
+        function showProductPopup(product) {
+          const popup = document.querySelector(".popup-overlay");
+          popup.querySelector(
+            ".popup-image"
+          ).style.backgroundImage = `url('${product.image}')`;
+          popup.querySelector("h2").textContent = product.name;
+          popup.querySelector(".popup-price").textContent = product.price;
+          popup.querySelector(".popup-description").textContent =
+            product.description;
+          popup.classList.add("active");
+          document.body.style.overflow = "hidden";
+        }
+
+        // Close popup function
+        const closePopup = () => {
+          const popup = document.querySelector(".popup-overlay");
+          popup.classList.remove("active");
+          document.body.style.overflow = "auto";
+        };
+
+        // Close popup when clicking the close button or outside popup
+        document
+          .querySelector(".popup-close")
+          .addEventListener("click", closePopup);
+        document
+          .querySelector(".popup-overlay")
+          .addEventListener("click", (event) => {
+            if (event.target === document.querySelector(".popup-overlay")) {
+              closePopup();
+            }
+          });
+
+        // Header scroll effect
+        const header = document.querySelector("header");
+        let lastScrollY = 0;
+
+        // Throttle scroll event to improve performance
+        window.addEventListener("scroll", () => {
+          const scrollY = window.scrollY;
+          if (Math.abs(scrollY - lastScrollY) > 50) {
+            header.classList.toggle("scrolled", scrollY > 50);
+            lastScrollY = scrollY;
+          }
+        });
+
+        // Video controls
+        const video = document.querySelector(".hero-video");
+        const videoControl = document.querySelector(".video-control");
+        const videoIcon = videoControl.querySelector("i");
+
+        videoControl.addEventListener("click", () => {
+          if (video.paused) {
+            video.play();
+            videoIcon.classList.remove("fa-play");
+            videoIcon.classList.add("fa-pause");
+          } else {
+            video.pause();
+            videoIcon.classList.remove("fa-pause");
+            videoIcon.classList.add("fa-play");
+          }
+        });
+
+        // Ensure video plays on mobile devices
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            videoIcon.classList.remove("fa-pause");
+            videoIcon.classList.add("fa-play");
+          });
+        }
+
+        // Fade out loading overlay
+        window.addEventListener("load", () => {
+          const loader = document.querySelector(".loading-overlay");
+          loader.style.opacity = "0";
+          setTimeout(() => (loader.style.display = "none"), 500);
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        }, observerOptions);
+
+        // Observe product cards and sections
+        document.querySelectorAll(".product-card, section").forEach((el) => {
+          el.classList.add("fade-in-section");
+          observer.observe(el);
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", (e) => {
+            e.preventDefault();
+            const target = document.querySelector(anchor.getAttribute("href"));
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+
+        // Button click animation
+        document.querySelectorAll(".btn").forEach((button) => {
+          button.addEventListener("click", (e) => {
+            const x = e.clientX - e.target.offsetLeft;
+            const y = e.clientY - e.target.offsetTop;
+            const ripple = document.createElement("span");
+            ripple.style.left = `${x}px`;
+            ripple.style.top = `${y}px`;
+            e.target.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+          });
+        });
+
+        // Ensure all images are lazy-loaded
+        document.querySelectorAll("img").forEach((img) => {
+          img.setAttribute("loading", "lazy");
+        });
+      });
+
+      // Parallax Effect
+      function handleParallax() {
+        const parallaxBg = document.querySelector(".parallax-bg");
+        let scrolled = window.pageYOffset;
+        const statsSection = document.querySelector(".statistics");
+        const rect = statsSection.getBoundingClientRect();
+
+        // Only apply parallax when section is in view
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const speed = 0.5;
+          const yPos = -(scrolled * speed);
+          parallaxBg.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        }
+      }
+
+      // Statistics Animation
+      function animateStatistics() {
+        const statCards = document.querySelectorAll(".stat-card");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const card = entry.target;
+                const numberEl = card.querySelector(".stat-number");
+                const progressBar = card.querySelector(".progress-bar");
+                const finalValue = parseInt(card.dataset.value);
+                const isCurrency = finalValue === 150000;
+                let currentValue = 0;
+
+                const animateValue = () => {
+                  const increment = Math.ceil(finalValue / 100);
+                  if (currentValue < finalValue) {
+                    currentValue = Math.min(
+                      currentValue + increment,
+                      finalValue
+                    );
+                    numberEl.textContent = isCurrency
+                      ? `$${currentValue.toLocaleString()}`
+                      : `${currentValue.toLocaleString()}+`;
+
+                    const progress = (currentValue / finalValue) * 100;
+                    progressBar.style.width = `${progress}%`;
+
+                    requestAnimationFrame(animateValue);
+                  }
+                };
+
+                animateValue();
+                observer.unobserve(card);
+              }
+            });
+          },
+          {
+            threshold: 0.2,
+          }
+        );
+
+        statCards.forEach((card) => observer.observe(card));
+      }
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        animateStatistics();
+        window.addEventListener("scroll", handleParallax, { passive: true });
+      });
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": "Apetal",
+        "description": "Handmade wool crafts and accessories",
+        "image": "assets/img/apetal-logo.png",
+        "url": "https://apetal.com",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "US"
+        },
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "USD",
+          "lowPrice": "49.99",
+          "highPrice": "129.99"
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Artisan Wool Scarf",
+    "price": "$49.99",
+    "description": "Hand-knitted with 100% natural wool.",
+    "image": "assets/img/tulip.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Luxury Wool Blanket",
+    "price": "$129.99",
+    "description": "Extra large chunky knit blanket.",
+    "image": "assets/img/blanket.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Cozy Wool Beanie",
+    "price": "$29.99",
+    "description": "Warm and stylish wool beanie.",
+    "image": "assets/img/beanie.jpg"
+  },
+  {
+    "id": 1,
+    "name": "Artisan Wool Scarf",
+    "price": "$49.99",
+    "description": "Hand-knitted with 100% natural wool.",
+    "image": "assets/img/tulip.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Luxury Wool Blanket",
+    "price": "$129.99",
+    "description": "Extra large chunky knit blanket.",
+    "image": "assets/img/blanket.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Cozy Wool Beanie",
+    "price": "$29.99",
+    "description": "Warm and stylish wool beanie.",
+    "image": "assets/img/beanie.jpg"
+  }
+]
