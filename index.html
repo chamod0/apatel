@@ -54,8 +54,14 @@
         <a href="#" class="logo">
           <img src="assets/img/apetal-logo.png" alt="Apetal Logo" />
         </a>
-        <div>
+        <!-- Cart Icon -->
+
+        <div class="header-actions">
           <a href="shop.html" class="btn btn-primary">Shop Now</a>
+          <div class="cart-icon" id="cart-icon">
+            <i class="fas fa-cart-shopping"></i>
+            <span id="cart-count">0</span>
+          </div>
         </div>
       </nav>
     </header>
@@ -115,6 +121,37 @@
         </div>
       </div>
     </section> -->
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-content" data-aos="fade-right">
+          <h2>Our Story</h2>
+          <p>
+            At Apetal, we craft beautiful wool products with love and care. Each
+            piece is handmade using traditional techniques and sustainable
+            materials.
+          </p>
+          <div class="about-features">
+            <div class="feature">
+              <i class="fas fa-heart"></i>
+              <h3>Handmade</h3>
+              <p>Crafted with love</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-leaf"></i>
+              <h3>Sustainable</h3>
+              <p>Eco-friendly materials</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-gem"></i>
+              <h3>Quality</h3>
+              <p>Premium craftsmanship</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="contact" class="contact">
       <div class="container">
         <h2 class="section-title">Contact Us</h2>
@@ -170,18 +207,7 @@
           <h2></h2>
           <p class="popup-price"></p>
           <p class="popup-description"></p>
-          <div class="popup-options">
-            <select class="color-select">
-              <option value="natural">Natural</option>
-              <option value="gray">Gray</option>
-              <option value="brown">Brown</option>
-            </select>
-            <select class="size-select">
-              <option value="s">Small</option>
-              <option value="m">Medium</option>
-              <option value="l">Large</option>
-            </select>
-          </div>
+
           <button class="btn btn-primary">Add to Cart</button>
         </div>
       </div>
@@ -204,9 +230,73 @@
         </p>
       </div>
     </footer>
+    <!-- Cart Popup -->
+    <div id="cart-popup">
+      <div id="cart-header">Your Cart</div>
+      <ul id="cart-items"></ul>
+      <div id="cart-total">
+        <strong>Total:</strong> <span id="cart-total-price">Rs 0/-</span>
+      </div>
+      <div id="cart-footer">
+        <button id="clear-cart">Clear Cart</button>
+        <button id="checkout" onclick="openCheckoutPage()">Checkout</button>
+      </div>
+    </div>
+    <!-- Checkout Page -->
+    <div id="checkout-page" class="popup-overlay">
+      <div class="popup-content">
+        <button class="popup-close" onclick="closeCheckoutPage()">
+          &times;
+        </button>
+        <h2>Checkout</h2>
+        <div id="checkout-items"></div>
+        <div id="checkout-total">
+          <strong>Total:</strong> <span id="checkout-total-price">Rs 0/-</span>
+        </div>
 
+        <form id="checkout-form">
+          <h3>Billing Details</h3>
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              name="checkoutname"
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="checkoutTel"
+              placeholder="Enter your email address"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="name">Telephone Number</label>
+            <input type="text" id="checkoutTel" name="Tel" required />
+          </div>
+          <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <textarea
+              id="checkoutaddress"
+              name="address"
+              rows="4"
+              placeholder="Enter your delivery address"
+              required
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Place Order</button>
+        </form>
+      </div>
+    </div>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Fetch products JSON
         // Fetch products JSON
         fetch("products.json")
           .then((response) => response.json())
@@ -219,18 +309,22 @@
               productCard.classList.add("product-card");
               productCard.dataset.productId = product.id;
               productCard.innerHTML = `
-          <div class="product-image" style="background-image: url('${product.image}')"></div>
-          <div class="product-info">
-            <h3>${product.name}</h3>
-            <p class="product-price">${product.price}</p>
-            <p>${product.description}</p>
-            <button class="btn btn-primary">View Details</button>
-          </div>
-        `;
+                <div class="product-image" style="background-image: url('${product.image}');"></div>
+                <div class="product-info">
+                   <div class="view-btn">
+                  <h3>${product.name}</h3>
+                  <p hidden>${product.description}</p>
+                  <p class="product-price">${product.price}</p>
+                  <div>
+                  <button class="btn btn-primary" onclick="addToCart('${product.name}', '${product.price}','${product.image}')">Add to Cart</button>
+                
+                </div>
+              `;
               productsGrid.appendChild(productCard);
 
-              // Attach click event for popup
-              productCard.addEventListener("click", () =>
+              // Attach click event for popup to the "View" button
+              const viewButton = productCard.querySelector(".product-image");
+              viewButton.addEventListener("click", () =>
                 showProductPopup(product)
               );
             });
@@ -363,21 +457,6 @@
         });
       });
 
-      // Parallax Effect
-      function handleParallax() {
-        const parallaxBg = document.querySelector(".parallax-bg");
-        let scrolled = window.pageYOffset;
-        const statsSection = document.querySelector(".statistics");
-        const rect = statsSection.getBoundingClientRect();
-
-        // Only apply parallax when section is in view
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          const speed = 0.5;
-          const yPos = -(scrolled * speed);
-          parallaxBg.style.transform = `translate3d(0, ${yPos}px, 0)`;
-        }
-      }
-
       // Statistics Animation
       function animateStatistics() {
         const statCards = document.querySelectorAll(".stat-card");
@@ -425,10 +504,343 @@
       }
 
       // Initialize
-      document.addEventListener("DOMContentLoaded", () => {
-        animateStatistics();
-        window.addEventListener("scroll", handleParallax, { passive: true });
+
+      // Load cart from local storage
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      updateCartDisplay(cart);
+
+      // Update Cart Display
+
+      function updateCartDisplay(cart) {
+        const cartItemsElement = document.getElementById("cart-items");
+        const cartTotalPriceElement =
+          document.getElementById("cart-total-price");
+
+        // Clear existing items
+        cartItemsElement.innerHTML = "";
+
+        // Calculate total price
+        let totalPrice = 0;
+
+        // Populate cart items
+        cart.forEach((item, index) => {
+          // Ensure item.price exists and is a string
+          if (!item.price || typeof item.price !== "string") {
+            console.error("Invalid price for item at index", index, item);
+            return; // Skip invalid items
+          }
+
+          const li = document.createElement("li");
+
+          // Extract numeric price
+          const numericPrice = parseFloat(item.price.replace(/[^0-9.-]+/g, ""));
+          const itemTotal = numericPrice * item.quantity;
+          console.log(item);
+          li.innerHTML = `
+      <div class="cart-item">
+       <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+        <div class="cart-item-details">
+          <span class="cart-item-name">${item.name}</span>
+          <span class="cart-item-price">${item.price}</span>
+          <div class="cart-item-quantity">
+            <button class="quantity-decrease" data-index="${index}">-</button>
+            <span class="quantity">${item.quantity}</span>
+            <button class="quantity-increase" data-index="${index}">+</button>
+          </div>
+          <span class="item-total">Total: Rs ${itemTotal.toFixed(2)}/-</span>
+          <button class="remove-item" data-index="${index}">Remove</button>
+        </div>
+      </div>
+    `;
+          cartItemsElement.appendChild(li);
+
+          // Add to total price
+          totalPrice += itemTotal;
+        });
+
+        // Update total price
+        cartTotalPriceElement.textContent = `Rs ${totalPrice.toFixed(2)}/-`;
+
+        // Attach event listeners to control buttons
+        attachCartControlListeners();
+      }
+      function attachCartControlListeners() {
+        // Quantity Decrease
+        document.querySelectorAll(".quantity-decrease").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const index = event.target.dataset.index;
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            if (cart[index].quantity > 1) {
+              cart[index].quantity -= 1;
+            } else {
+              // If quantity is 1, remove the item
+              cart.splice(index, 1);
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartDisplay(cart);
+            updateCartCount();
+          });
+        });
+
+        // Quantity Increase
+        document.querySelectorAll(".quantity-increase").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const index = event.target.dataset.index;
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            cart[index].quantity += 1;
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartDisplay(cart);
+            updateCartCount();
+          });
+        });
+        // Initialize cart on page load
+        document.addEventListener("DOMContentLoaded", () => {
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+          updateCartDisplay(cart);
+          updateCartCount();
+        });
+
+        // Cart Icon Toggle
+        document
+          .querySelector(".cart-icon")
+          .addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            const cartPopup = document.getElementById("cart-popup");
+            cartPopup.classList.toggle("open");
+            updateCartDisplay(cart);
+          });
+        // Close Cart Popup when clicking outside
+        document.addEventListener("click", (event) => {
+          const cartPopup = document.getElementById("cart-popup");
+          if (
+            !cartPopup.contains(event.target) &&
+            !event.target.closest(".btn-primary")
+          ) {
+            cartPopup.classList.remove("open");
+          }
+        });
+
+        // Clear Cart
+        document.getElementById("clear-cart").addEventListener("click", () => {
+          localStorage.removeItem("cart");
+          updateCartDisplay([]);
+          updateCartCount();
+        });
+        // Remove Item
+        document.querySelectorAll(".remove-item").forEach((button) => {
+          button.addEventListener("click", (event) => {
+            const index = event.target.dataset.index;
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            cart.splice(index, 1);
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartDisplay(cart);
+            updateCartCount();
+          });
+        });
+      }
+      // Remove Item from Cart
+      function removeFromCart(index) {
+        cart.splice(index, 1); // Remove item at the given index
+        localStorage.setItem("cart", JSON.stringify(cart)); // Update local storage
+        updateCartDisplay(cart); // Refresh cart display
+      }
+
+      // Close Cart Popup
+      document.addEventListener("click", (event) => {
+        const cartPopup = document.getElementById("cart-popup");
+        if (
+          !cartPopup.contains(event.target) &&
+          !event.target.closest(".btn-primary")
+        ) {
+          cartPopup.classList.remove("open");
+        }
       });
+
+      document
+        .getElementById("cart-popup")
+        .addEventListener("click", (event) => {
+          event.stopPropagation();
+        });
+
+      // Function to update the cart count
+      function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const totalQuantity = cart.reduce(
+          (total, item) => total + (item.quantity || 1),
+          0
+        );
+        document.getElementById("cart-count").textContent = totalQuantity;
+      }
+      // Call this function whenever the cart is updated
+      document.addEventListener("DOMContentLoaded", () => {
+        updateCartCount(); // Initialize cart count on page load
+      });
+
+      // Update cart count after adding an item
+      function addToCart(name, price, image) {
+        // Validate price before adding to cart
+        if (!price || typeof price !== "string") {
+          console.error("Invalid price for product:", name);
+          alert(
+            "There was an issue adding this item to the cart. Please try again."
+          );
+          return;
+        }
+
+        // Load existing cart or initialize
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // Find if the item already exists in the cart
+        const existingItemIndex = cart.findIndex((item) => item.name === name);
+
+        if (existingItemIndex > -1) {
+          // If item exists, increase its quantity
+          cart[existingItemIndex].quantity += 1;
+        } else {
+          // If item doesn't exist, add new item with quantity 1
+          cart.push({
+            name: name,
+            price: price.trim(),
+            image: image,
+            quantity: 1,
+          });
+        }
+
+        // Save the updated cart to local storage
+        localStorage.setItem("cart", JSON.stringify(cart));
+
+        // Update the cart display and count
+        updateCartDisplay(cart);
+        updateCartCount();
+
+        // Open the cart popup
+        document.getElementById("cart-popup").classList.add("open");
+      }
+
+      // Update cart count after removing an item
+      function removeFromCart(index) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        cart.splice(index, 1); // Remove item at the given index
+        localStorage.setItem("cart", JSON.stringify(cart)); // Update local storage
+        updateCartDisplay(cart); // Refresh cart display
+        updateCartCount(); // Update cart count
+      }
+
+      // // Update cart count after clearing the cart
+      // document.getElementById("clear-cart").addEventListener("click", () => {
+      //   let cart = [];
+      //   localStorage.removeItem("cart"); // Clear local storage
+      //   updateCartDisplay(cart); // Refresh cart display
+      //   updateCartCount(); // Update cart count
+      // });
+      // Toggle Cart Popup
+      // Toggle Cart Popup
+      // Toggle Cart Popup
+      document
+        .querySelector(".cart-icon")
+        .addEventListener("click", (event) => {
+          event.stopPropagation(); // Prevent event from bubbling
+          const cartPopup = document.getElementById("cart-popup");
+          cartPopup.classList.toggle("open");
+        });
+      // Open Checkout Page
+      function openCheckoutPage() {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        if (cart.length === 0) {
+          alert("Your cart is empty!");
+          return;
+        }
+
+        // Populate checkout items
+        const checkoutItemsElement = document.getElementById("checkout-items");
+        const checkoutTotalPriceElement = document.getElementById(
+          "checkout-total-price"
+        );
+
+        checkoutItemsElement.innerHTML = ""; // Clear existing items
+
+        let totalPrice = 0;
+
+        cart.forEach((item) => {
+          const li = document.createElement("li");
+          li.textContent = `${item.name} - ${item.price} x ${item.quantity}`;
+          checkoutItemsElement.appendChild(li);
+
+          // Calculate total price
+          const numericPrice = parseFloat(item.price.replace(/[^0-9.-]+/g, ""));
+          totalPrice += numericPrice * item.quantity;
+        });
+
+        // Update total price
+        checkoutTotalPriceElement.textContent = `Rs ${totalPrice.toFixed(2)}/-`;
+
+        // Show the checkout page
+        document.getElementById("checkout-page").classList.add("active");
+      }
+
+      // Close Checkout Page
+      function closeCheckoutPage() {
+        document.getElementById("checkout-page").classList.remove("active");
+      }
+
+      // Handle Form Submission
+      document
+        .getElementById("checkout-form")
+        .addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          // Get form data
+          const name = document.getElementById("checkoutname").value;
+          const email = document.getElementById("checkouthemail").value;
+          const address = document.getElementById("checkoutaddress").value;
+          const Tel = document.getElementById("checkoutTel").value;
+          console.log(name, email, address);
+          // Get cart items and total price
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          console.log(cart);
+
+          let orderDetails = `Order Details:\nName: ${name}\nEmail: ${email}\nTel: ${Tel}\nAddress: ${address}\n\nItems:\n`;
+
+          let totalPrice = 0;
+
+          cart.forEach((item) => {
+            orderDetails += `${item.name} - ${item.price} x ${item.quantity}\n`;
+            const numericPrice = parseFloat(
+              item.price.replace(/[^0-9.-]+/g, "")
+            );
+            totalPrice += numericPrice * item.quantity;
+          });
+
+          orderDetails += `\nTotal Price: Rs ${totalPrice.toFixed(2)}/-\n`;
+
+          // Encode the message for the URL
+          const whatsappMessage = encodeURIComponent(orderDetails);
+
+          // Create the WhatsApp link
+          const phoneNumber = "+94717100822"; // Replace with your WhatsApp number (include country code)
+          const whatsappLink = `https://wa.me/${phoneNumber}?text=${whatsappMessage}`;
+
+          // Open WhatsApp in a new tab
+          window.open(whatsappLink, "_blank");
+
+          // Clear the cart
+          localStorage.removeItem("cart");
+          updateCartDisplay([]);
+          updateCartCount();
+
+          // Close the checkout page
+          closeCheckoutPage();
+
+          // Show confirmation message
+          alert("Thank you for your order! We will contact you soon.");
+        });
     </script>
     <script type="application/ld+json">
       {
